@@ -1,72 +1,27 @@
-32 = 0010 0000
-75 = 0100 1011
-
-76 = 0100 1100
-79 = 0100 1111
-
-95 = 0101 1111
-
------0xx0 x0xx
-
-deny 0010 0000 = 32
------0001 1111 -  -[32; 63]
-
-0100 1011
-0100 1100
-0100 1101
-
-0100 1111
-
-deny 00
 
 
+Router(config)#access-list 150 deny icmp 0.0.0.32 255.255.255.30 any		 - block [32; 62]
+Router(config)#access-list 150 deny icmp 0.0.0.64 255.255.255.6 any 		- block [64; 70]
+Router(config)#access-list 150 deny icmp 0.0.0.72 255.255.255.2 any 				- block [72; 74]
 
-	0100 0000
-	0101 1111
-	
-
-	xxxx xxx1 - block намертво
-
-deny 	001x xxxx - [32; 63] - mask 30
-
-deny	0100 xxxx - [64;79] - mask 14
-
-permit	0100 11xx - [76; 79] - mask 2
-
-	0100 1xxx - [72; 79]
-
-	0100 01xx - [68; 71]
-
-	
-
-	0101 xxxx
-
-permit 0101 0000 
--------0001 1111 - -[64;95]
-
-deny 
-
-permit 0100 1100 = 76 - от 
--------000000011
-
-deny 0100 0111 = 71 - -все меньше 71
------1111 1000
-
-permit 0100 1010 - +все больше 74
-
-deny 0100 1011 - -75
-
-permit 1000 0000 - 
-permit 0010 
-
-Router(config)#access-list 150 deny icmp 0.0.0.32 255.255.255.30 any
-Router(config)#access-list 150 deny icmp 0.0.0.64 255.255.255.14 any
-Router(config)#access-list 150 permit icmp 0.0.0.76 255.255.255.2 any
-
-Router(config)#access-list 150 deny icmp 0.0.0.33 255.255.255.30 any
-Router(config)#access-list 150 deny icmp 0.0.0.65 255.255.255.14 any
-Router(config)#access-list 150 permit icmp 0.0.0.77 255.255.255.2 any
+Router(config)#access-list 150 deny ip 0.0.0.33 255.255.255.30 any
+Router(config)#access-list 150 deny ip 0.0.0.65 255.255.255.6 any
+Router(config)#access-list 150 deny ip 0.0.0.73 255.255.255.2 any
 
 Router(config)#access-list 150 permit ip any any
 
+
+32 30
+0010 0000
 0001 1110
+001x xxx0 - 32-62
+
+64 6
+0100 0000
+0000 0111
+0000 0xx0 - 64-70
+
+72 2
+0100 1000
+0000 0011
+0000 00x0 - 72-74
